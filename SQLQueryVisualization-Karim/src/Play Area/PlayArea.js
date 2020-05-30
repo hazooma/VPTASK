@@ -70,7 +70,7 @@ function PlayArea(props) {
             );
           })}{" "}
         </ul>{" "}
-          <table style={{width='100%', color:'#fff', textAlign='center'}}>
+          <table style={{width:'100%', color:'#fff', textAlign:'center'}}>
             <tr>
               <th>id</th>
               <th>title</th>
