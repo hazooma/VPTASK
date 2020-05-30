@@ -1,107 +1,103 @@
-import React, {
-  useState
-} from 'react';
-import './App.css';
-import './Function List/FunctionsList'
-import FunctionList from './Function List/FunctionsList';
-import PlayArea from './Play Area/PlayArea';
-import globalContext from './GlobalState';
-
+import React, { useState } from "react";
+import "./App.css";
+import "./Function List/FunctionsList";
+import FunctionList from "./Function List/FunctionsList";
+import PlayArea from "./Play Area/PlayArea";
+import globalContext from "./GlobalState";
 
 function App() {
   const initState = useState({
     available: [],
     databases: [],
-    Entities: [{
+    Entities: [
+      {
         name: "Post",
-        properties: [{
+        properties: [
+          {
             name: "id",
-            type: "i"
-          }, {
+            type: "i",
+          },
+          {
             name: "title",
-            type: 's'
+            type: "s",
           },
           {
             name: "hidden",
-            type: 'b'
+            type: "b",
           },
           {
             name: "user_id",
-            type: 'i'
-          }
-        ]
+            type: "i",
+          },
+        ],
       },
       {
         name: "Role",
-        properties: [{
+        properties: [
+          {
             name: "id",
-            type: "i"
-          }, {
+            type: "i",
+          },
+          {
             name: "name",
-            type: 's'
+            type: "s",
           },
           {
             name: "user_id",
-            type: 'i'
-          }
-        ]
+            type: "i",
+          },
+        ],
       },
       {
         name: "Tag",
-        properties: [{
+        properties: [
+          {
             name: "id",
-            type: "i"
-          }, {
+            type: "i",
+          },
+          {
             name: "name",
-            type: 's'
+            type: "s",
           },
           {
             name: "post_id",
-            type: 'i'
-          }
-        ]
+            type: "i",
+          },
+        ],
       },
       {
         name: "User",
-        properties: [{
+        properties: [
+          {
             name: "id",
-            type: "i"
-          }, {
+            type: "i",
+          },
+          {
             name: "firstName",
-            type: 's'
+            type: "s",
           },
           {
             name: "lastName",
-            type: 's'
+            type: "s",
           },
           {
             name: "age",
-            type: 'i'
+            type: "i",
           },
-          
-
-        ]
-      }
+        ],
+      },
     ],
     Push: [],
-    Joins: []
+    Joins: [],
   });
 
-
   return (
-
-    <div className = "App" >
-    <
-    globalContext.Provider value = {
-      initState
-    } >
-    <
-    FunctionList / >
-    <
-    PlayArea / >
-    <
-    /globalContext.Provider> < /
-    div >
+    <div className="App">
+      <globalContext.Provider value={initState}>
+        <FunctionList />
+        <PlayArea />
+      </globalContext.Provider>{" "}
+    </div>
   );
 }
 
