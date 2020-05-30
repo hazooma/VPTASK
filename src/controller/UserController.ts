@@ -33,6 +33,12 @@ export class UserController {
     async exec(request: Request, response: Response) {
 
         if (!request.body.Joins.length) {
+            const tables = {
+                Post: "post",
+                Tag: "tag",
+                User: "user",
+                Role: "role"
+            }
             const entities = {
                 Post: this.postRepository,
                 Tag: this.tagRepository,
@@ -45,7 +51,6 @@ export class UserController {
 
 
         } else {
-            console.log(11)
             const tables = {
                 Post: "post",
                 Tag: "tag",
@@ -73,8 +78,16 @@ export class UserController {
                 console.log(uu)
 
                 for (let j = 0; j < uu.length; j++) {
+                    let rr = uu[j][0]
+                    let rrr = uu[j][1]
+                    if (typeof rr === "object") {
+                        rr = rr.name;
+                    }
+                    if (typeof rrr === "object") {
+                        rrr = rrr.name;
+                    }
 
-                    temp2 = temp2.where(`${e1}.${uu[j][0]} = ${e2}.${uu[j][1].name}`)
+                    temp2 = temp2.where(`${e1}.${rr} = ${e2}.${rrr}`)
 
                 }
 
