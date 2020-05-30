@@ -1,0 +1,36 @@
+
+#list{
+    background-color: rgb(66, 62, 62);
+    margin: 0;
+    padding: 0;
+    width: 20%;
+    height: 100%;
+    overflow: hidden;
+
+}
+
+.function{
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    list-style-type: none;
+    background-color: rgb(190, 137, 68);
+    margin: 20px;
+    padding: 4px;
+
+}
+
+.function:hover{
+    background-color: rgb(228, 174, 104);
+}
+ul{
+    margin: 0;
+    padding: 0;
+}
+.functionsHeader{
+    text-align: center;
+    text-decoration: solid;
+    color: rgb(27, 25, 25);
+    font-size: 3vw;
+}
