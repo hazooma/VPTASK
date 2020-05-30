@@ -26,7 +26,7 @@ function PlayArea(props) {
     });
   }, []);
 
-  const [data, setData] = React.useState([])
+  const [data, setData] = React.useState([{}]);
   const call = (event) => {
     return fetch("http://localhost:5000/execute", {
       method: "POST",
@@ -36,8 +36,9 @@ function PlayArea(props) {
       body: JSON.stringify(gl),
 
       mode: "cors",
-    }).then((res) => res.json())
-    .then(data => setData(data))
+    })
+      .then((res) => res.json())
+      .then((data) => setData(data));
   };
   if (onBoard) {
     console.log(JSON.stringify(gl.Push));
@@ -70,24 +71,20 @@ function PlayArea(props) {
             );
           })}{" "}
         </ul>{" "}
-          <table style={{width:'100%', color:'#fff', textAlign:'center'}}>
-            <tr>
-              <th>id</th>
-              <th>title</th>
-              <th>body</th>
-              <th>hidden</th>
-              <th>user_id</th>
-            </tr>
-            {data.map((table) => (
-              <tr>
-                <td>{table.id}</td>
-                <td>{table.title}</td>
-                <td>{table.body}</td>
-                <td>{table.hidden + ''}</td>
-                <td>{table.user_id}</td>
-              </tr>
+        <table style={{ width: "100%", color: "#fff", textAlign: "center" }}>
+          <tr>
+            {Object.keys(data[0]).map((name) => (
+              <th>{name}</th>
             ))}
-          </table>
+          </tr>
+          {data.map((table) => (
+            <tr>
+              {Object.keys(table).map((name) => (
+                <th>{table[name] + ""}</th>
+              ))}
+            </tr>
+          ))}
+        </table>
         <li
           style={{
             background: "blue",
