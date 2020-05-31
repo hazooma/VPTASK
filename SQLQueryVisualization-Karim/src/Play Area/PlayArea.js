@@ -44,6 +44,7 @@ function PlayArea(props) {
       .then((data) => {
         if (Array.isArray(data) && data.length)
           setData(data)
+        else setData([{}])
 
       });
   };

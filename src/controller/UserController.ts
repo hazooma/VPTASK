@@ -58,39 +58,38 @@ export class UserController {
                     const element = x[i];
                     if (!element.value) continue
                     if (element.type === "s") {
-                        console.log(`${element.value}`)
                         if (element.op === "=") {
                             if (element.type === "s")
-                                temp2 = temp2.where(`${tablename}.${element.name} = :param`, { param: element.value })
+                                temp2 = temp2.andWhere(`${tablename}.${element.name} = :param`, { param: element.value })
                             else if (element.type === "b")
-                                temp2 = temp2.where(`${tablename}.${element.name} = :param`, { param: element.value })
+                                temp2 = temp2.andWhere(`${tablename}.${element.name} = :param`, { param: element.value })
 
                         }
                         if (element.op === "LIKE") {
 
-                            temp2 = temp2.where(`${tablename}.${element.name} LIKE :param`, { param: "%" + element.value + "%" })
+                            temp2 = temp2.andWhere(`${tablename}.${element.name} LIKE :param`, { param: "%" + element.value + "%" })
 
                         }
 
                     }
                     if (element.type === "b") {
-                        temp2 = temp2.where(`${tablename}.${element.name} = :param`, { param: element.value === "true" ? 1 : 0 })
+                        temp2 = temp2.andWhere(`${tablename}.${element.name} = :param`, { param: element.value === "true" ? 1 : 0 })
 
 
                     }
                     if (element.type === "i") {
                         if (element.op === "<") {
-                            temp2 = temp2.where(`${tablename}.${element.name} < :param`, { param: +element.value })
+                            temp2 = temp2.andWhere(`${tablename}.${element.name} < :param`, { param: +element.value })
                         }
                         if (element.op === ">") {
-                            temp2 = temp2.where(`${tablename}.${element.name} > :param`, { param: +element.value })
+                            temp2 = temp2.andWhere(`${tablename}.${element.name} > :param`, { param: +element.value })
                         } if (element.op === "<=") {
-                            temp2 = temp2.where(`${tablename}.${element.name} <= :param`, { param: +element.value })
+                            temp2 = temp2.andWhere(`${tablename}.${element.name} <= :param`, { param: +element.value })
                         } if (element.op === ">=") {
-                            temp2 = temp2.where(`${tablename}.${element.name} >=:param`, { param: +element.value })
+                            temp2 = temp2.andWhere(`${tablename}.${element.name} >=:param`, { param: +element.value })
                         }
                         if (element.op === "=") {
-                            temp2 = temp2.where(`${tablename}.${element.name} = :param`, { param: +element.value })
+                            temp2 = temp2.andWhere(`${tablename}.${element.name} = :param`, { param: +element.value })
                         }
 
 
@@ -131,7 +130,6 @@ export class UserController {
                 const e1 = tables[cnt.E1]
                 const e2 = tables[cnt.E2]
                 const uu = cnt.Joins
-                console.log(uu)
 
                 for (let j = 0; j < uu.length; j++) {
                     let rr = uu[j][0]
