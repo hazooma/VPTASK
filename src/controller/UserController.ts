@@ -45,9 +45,65 @@ export class UserController {
                 User: this.userRepository,
                 Role: this.roleRepository
             }
-            const x = await entities[request.body.Push[0].name].find()
+            let temp = await getManager();
+            let temp2 = temp.createQueryBuilder(tables[request.body.Push[0].name], request.body.Push[0].name)
 
-            return response.send(x)
+            for (let j = 0; j < request.body.Push.length; j++) {
+                const element = request.body.Push[j];
+                const x = element.properties
+                const tablename = tables[element.name]
+
+
+                for (let i = 0; i < x.length; i++) {
+                    const element = x[i];
+                    if (!element.value) continue
+                    if (element.type === "s") {
+                        console.log(`${element.value}`)
+                        if (element.op === "=") {
+                            if (element.type === "s")
+                                temp2 = temp2.where(`${tablename}.${element.name} = :param`, { param: element.value })
+                            else if (element.type === "b")
+                                temp2 = temp2.where(`${tablename}.${element.name} = :param`, { param: element.value })
+
+                        }
+                        if (element.op === "LIKE") {
+
+                            temp2 = temp2.where(`${tablename}.${element.name} LIKE :param`, { param: "%" + element.value + "%" })
+
+                        }
+
+                    }
+                    if (element.type === "b") {
+                        temp2 = temp2.where(`${tablename}.${element.name} = :param`, { param: element.value === "true" ? 1 : 0 })
+
+
+                    }
+                    if (element.type === "i") {
+                        if (element.op === "<") {
+                            temp2 = temp2.where(`${tablename}.${element.name} < :param`, { param: +element.value })
+                        }
+                        if (element.op === ">") {
+                            temp2 = temp2.where(`${tablename}.${element.name} > :param`, { param: +element.value })
+                        } if (element.op === "<=") {
+                            temp2 = temp2.where(`${tablename}.${element.name} <= :param`, { param: +element.value })
+                        } if (element.op === ">=") {
+                            temp2 = temp2.where(`${tablename}.${element.name} >=:param`, { param: +element.value })
+                        }
+                        if (element.op === "=") {
+                            temp2 = temp2.where(`${tablename}.${element.name} = :param`, { param: +element.value })
+                        }
+
+
+                    }
+
+
+
+                }
+            }
+
+
+            return response.send(await temp2
+                .getRawMany())
 
 
         } else {
@@ -63,7 +119,7 @@ export class UserController {
             let temp2 = temp.createQueryBuilder(tables[request.body.Push[0].name], request.body.Push[0].name)
 
             for (let i = 1; i < n; i++) {
-                temp2 = temp2.innerJoin(tables[request.body.Push[i].name], request.body.Push[i].name)
+                temp2 = temp2.leftJoin(tables[request.body.Push[i].name], request.body.Push[i].name)
 
             }
 
@@ -93,6 +149,60 @@ export class UserController {
 
 
             }
+
+            for (let j = 0; j < request.body.Push.length; j++) {
+                const element = request.body.Push[j];
+                const x = element.properties
+                const tablename = tables[element.name]
+
+
+                for (let i = 0; i < x.length; i++) {
+                    const element = x[i];
+                    if (!element.value) continue
+                    if (element.type === "s") {
+                        console.log(`${element.value}`)
+                        if (element.op === "=") {
+                            if (element.type === "s")
+                                temp2 = temp2.andWhere(`${tablename}.${element.name} = :param`, { param: element.value })
+                            else if (element.type === "b")
+                                temp2 = temp2.andWhere(`${tablename}.${element.name} = :param`, { param: element.value })
+
+                        }
+                        if (element.op === "LIKE") {
+
+                            temp2 = temp2.andWhere(`${tablename}.${element.name} LIKE :param`, { param: "%" + element.value + "%" })
+
+                        }
+
+                    }
+                    if (element.type === "b") {
+                        temp2 = temp2.andWhere(`${tablename}.${element.name} = :param`, { param: element.value === "true" ? 1 : 0 })
+
+
+                    }
+                    if (element.type === "i") {
+                        if (element.op === "<") {
+                            temp2 = temp2.andWhere(`${tablename}.${element.name} < :param`, { param: +element.value })
+                        }
+                        if (element.op === ">") {
+                            temp2 = temp2.andWhere(`${tablename}.${element.name} > :param`, { param: +element.value })
+                        } if (element.op === "<=") {
+                            temp2 = temp2.andWhere(`${tablename}.${element.name} <= :param`, { param: +element.value })
+                        } if (element.op === ">=") {
+                            temp2 = temp2.andWhere(`${tablename}.${element.name} >=:param`, { param: +element.value })
+                        }
+                        if (element.op === "=") {
+                            temp2 = temp2.andWhere(`${tablename}.${element.name} = :param`, { param: +element.value })
+                        }
+
+
+                    }
+
+
+
+                }
+            }
+
             return response.send(await temp2
                 .getRawMany())
 
