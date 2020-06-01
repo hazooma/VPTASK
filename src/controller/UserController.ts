@@ -118,7 +118,7 @@ export class UserController {
             let temp2 = temp.createQueryBuilder(tables[request.body.Push[0].name], request.body.Push[0].name)
 
             for (let i = 1; i < n; i++) {
-                temp2 = temp2.leftJoin(tables[request.body.Push[i].name], request.body.Push[i].name)
+                temp2 = temp2.innerJoinAndSelect(tables[request.body.Push[i].name], request.body.Push[i].name)
 
             }
 
